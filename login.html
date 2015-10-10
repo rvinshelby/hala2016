@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+   <head>
+      <title>Handout</title>
+      <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no" >
+      <meta charset="utf-8">
+      <link rel="stylesheet" href="css/bootstrap.min.css" media="screen">
+	  <link rel="stylesheet" href="css/font-awesome.min.css">
+	  <link rel="stylesheet" href="css/animate.min.css">
+      <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,800,700,400italic,600italic,700italic,800italic,300italic" rel="stylesheet" type="text/css">
+       <link rel="stylesheet" href="css/rvin.css" media="screen">
+      <link rel='shortcut icon' type='image/x-icon' href='favicon.ico' />
+      <style>
+		body
+		{
+		-webkit-transition: background 0.5s ease-in-out;
+		transition: background 0.5s ease-in-out;
+/*		display:none;*/
+		}
+        .animated
+		 {
+		 -webkit-animation-duration: 0.5s;
+		 animation-duration: 0.5s;
+		 }
+          
+      </style>
+   </head>
+   <body class="bg-info">
+<!--LOGIN FORM-->
+<section id="login">
+    <div class="container">
+    	<div class="row">
+    	    <div class="col-xs-12">
+        	    <div class="form-wrap" style="vertical-align:middle;">
+                <div class="center-block"><center><img src="images/logo.png" style="width:15%;"></center></div>
+                    <br>
+<!--CONTENT-->
+
+                    <button  class="btn btn-facebook btn-block" type="button" id="fblogin" ><i class="fa fa-facebook-official fa-fw"></i> &nbsp; Login with Facebook</button>
+                    <button  class="btn btn-facebook btn-block" type="button" id="signanon"> Sign in as Anonymous</button>
+
+                    <hr>
+        	    </div>
+    		</div> <!-- /.col-xs-12 -->
+    	</div> <!-- /.row -->
+    </div> <!-- /.container -->
+</section>
+<!--LOGIN END-->
+  
+
+
+       <script src="js/jquery-1.9.1.min.js"></script>
+       <script src="js/bootstrap.min.js"></script>
+       <script src="js/fastclick.min.js"></script>
+       <script src="js/openfb.js"></script>
+       
+<script>
+$(document).ready(function(){
+$('#signanon').click(function(){
+  localStorage.setItem('anon', 'true');
+  location.href="home.html";
+});
+
+openFB.init({appId: '864476627007098'});
+$("#fblogin").click(function(){
+openFB.login(
+                function(response) {
+                    if(response.status === 'connected') {
+                        localStorage.setItem('Current_user', response.name);
+                        localStorage.setItem('anon', 'false');
+                        location.href="home.html";
+                    } else {
+                        alert('Facebook login failed: ' + response.error);
+                    }
+                }, {scope: 'email,read_stream,publish_actions'});
+});
+});
+</script>
+
+   </body>
+</html>

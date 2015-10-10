@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+    <title>Heatmap ni Largo</title>
+    <style>
+      #map-canvas { height: 100% }
+      h1 { position:absolute; background:black; color:white; padding:10px; font-weight:200; z-index:10000;}
+      #all-examples-info { position:absolute; background:white; font-size:16px; padding:20px; bottom:20px; width:350px; line-height:150%; border:1px solid rgba(0,0,0,.2);}
+    </style>
+    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?sensor=false"></script>
+    <script src="heatmap.js"></script>
+    <script src="gmaps-heatmap.js"></script>
+	<script src="jquery-1.11.3.min.js"></script>
+  </head>
+  <body>
+
+    <div id="map-canvas"></div>
+    <div id="all-examples-info"></div>
+    <script>
+		
+		//First get the provinces from the database
+		$.ajax({
+			type : 'GET',
+			url : 'map.php',
+			data : {},
+			dataType : 'html',
+			success : function (data){
+				if (data){
+					$('#heatmapHolder').html(data);
+					localStorage.setItem('Province_Array',JSON.stringify(provinceArray));
+				}				
+			}		
+		});
+	
+		//declare the coordinates with values 'lat', 'lng' and 'count'
+		//kingina pinahirapan ako nito
+		var coord = {
+			'Abra': 							{lat: 17.566, lng: 120.794, count: 0},
+			'Agusan Del Norte' :				{lat: 9.058, lng: 125.486, count: 0},
+			'Agusan Del Sur':					{lat: 8.584, lng: 125.800, count: 0},
+			'Aklan':							{lat: 11.655, lng: 122.676, count: 0},
+			'Albay':							{lat: 13.256, lng: 123.747, count: 0},
+			'Antique':							{lat: 11.122, lng: 122.086, count: 0},
+			'Apayao':							{lat: 18.082, lng: 121.207, count: 0},
+			'Aurora':							{lat: 16.976, lng: 121.640, count: 0},
+			'Basilan':							{lat: 6.592, lng: 121.878, count: 0},
+			'Bataan':							{lat: 14.650, lng: 120.427, count: 0},
+			'Batanes':							{lat: 20.417, lng: 121.975, count: 0},
+			'Batangas':							{lat: 13.877, lng: 121.019, count: 0},
+			'Benguet':							{lat: 16.562, lng: 120.686, count: 0},
+			'Biliran':							{lat: 11.510, lng: 124.486, count: 0},
+			'Bohol':							{lat: 9.870, lng: 124.169, count: 0},
+			'Bukidnon':							{lat: 7.996, lng: 124.970, count: 0},
+			'Bulacan':							{lat: 14.982, lng: 121.013, count: 0},
+			'Cagayan':							{lat: 18.068, lng: 121.649, count: 0},
+			'Camarines Norte':					{lat: 14.164, lng: 122.709, count: 0},
+			'Camarines Sur':					{lat: 13.695, lng: 123.263, count: 0},
+			'Camiguin': 						{lat: 9.168, lng: 124.719, count: 0},
+			'Capiz' :							{lat: 11.393, lng: 122.649, count: 0},
+			'Catanduanes':						{lat: 13.809, lng: 124.219, count: 0},
+			'Cavite':							{lat: 14.281, lng: 120.846, count: 0},
+			'Cebu':								{lat: 10.378, lng: 123.846, count: 0},
+			'Compostela Valley':				{lat: 7.538, lng: 125.986, count: 0},
+			'Cotabato':							{lat: 7.220, lng: 124.824, count: 0},
+			'Davao del Norte':					{lat: 7.445, lng: 125.597, count: 0},
+			'Davao del Sur':					{lat: 6.466, lng: 125.408, count: 0},
+			'Davao Occidental':					{lat: 6.466, lng: 125.408, count: 0},
+			'Davao Oriental':					{lat: 7.139, lng: 126.269, count: 0},
+			'Dinagat Islands':					{lat: 10.163, lng: 125.586, count: 0},
+			'Eastern Samar':					{lat: 11.530, lng: 125.476, count: 0},
+			'Guimaras':							{lat: 10.571, lng: 122.607, count: 0},
+			'Ifugao':							{lat: 16.834, lng: 121.233, count: 0},
+			'Ilocos Norte':						{lat: 18.174, lng: 120.705, count: 0},
+			'Ilocos Sur':						{lat: 17.278, lng: 120.602, count: 0},
+			'Iloilo':							{lat: 11.051, lng: 122.685, count: 0},
+			'Isabela':							{lat: 16.962, lng: 121.932, count: 0},
+			'Kalinga':							{lat: 17.425, lng: 121.296, count: 0},
+			'La Union': 						{lat: 16.563, lng: 120.427, count: 0},
+			'Laguna' :							{lat: 14.267, lng: 121.318, count: 0},
+			'Lanao del Norte':					{lat: 8.017, lng: 124.097, count: 0},
+			'Leyte':							{lat: 10.784, lng: 124.776, count: 0},
+			'Maguindanao':						{lat: 7.150, lng: 124.532, count: 0},
+			'Marinduque':						{lat: 13.384, lng: 121.996, count: 0},
+			'Masbate':							{lat: 12.433, lng: 123.513, count: 0},
+			'Misamis Occidental':				{lat: 8.341, lng: 123.712, count: 0},
+			'Misamis Oriental':					{lat: 8.664, lng: 124.752, count: 0},
+			'Mountain Province':				{lat: 17.064, lng: 121.168, count: 0},
+			'Negros Occidental':				{lat: 10.234, lng: 122.973, count: 0},
+			'Negros Oriental':					{lat: 9.727, lng: 122.975, count: 0},
+			'Northern Samar':					{lat: 12.418, lng: 124.672, count: 0},
+			'Nueva Ecija':						{lat: 15.647, lng: 120.995, count: 0},
+			'Nueva Vizcaya':					{lat: 16.256, lng: 121.111, count: 0},
+			'Occidental Mindoro':				{lat: 13.025, lng: 120.633, count: 0},
+			'Oriental Mindoro':					{lat: 12.860, lng: 121.179, count: 0},
+			'Palawan':							{lat: 10.229, lng: 119.101, count: 0},
+			'Pampanga':							{lat: 15.019, lng: 120.670, count: 0},
+			'Pangasinan':						{lat: 16.022, lng: 120.335, count: 0},
+			'Quezon': 							{lat: 14.186, lng: 122.014, count: 0},
+			'Quirino' :							{lat: 16.273, lng: 121.710, count: 0},
+			'Rizal':							{lat: 14.589, lng: 121.281, count: 0},
+			'Romblon':							{lat: 12.554, lng: 122.282, count: 0},
+			'Samar':							{lat: 12.363, lng: 124.290, count: 0},
+			'Sarangani':						{lat: 6.017, lng: 124.945, count: 0},
+			'Siquijor':							{lat: 9.197, lng: 123.578, count: 0},
+			'Sorsogon':							{lat: 12.822, lng: 123.839, count: 0},
+			'South Cotabato':					{lat: 6.312, lng: 124.77, count: 0},
+			'Southern Leyte':					{lat: 10.261, lng: 125.027, count: 0},
+			'Sultan Kudarat':					{lat: 6.500, lng: 124.606, count: 0},
+			'Sulu':								{lat: 5.941, lng: 121.180, count: 0},
+			'Surigao del Norte':				{lat: 9.694, lng: 125.786, count: 0},
+			'Surigao del Sur':					{lat: 8.702, lng: 126.103, count: 0},
+			'Tarlac':							{lat: 15.524, lng: 120.474, count: 0},
+			'Tawi-Tawi':						{lat: 5.146, lng: 120.210, count: 0},
+			'Zambales':							{lat: 15.292, lng: 120.123, count: 0},
+			'Zamboanga del Norte':				{lat: 8.000, lng: 122.730, count: 0},
+			'Zamboanga del Sur':				{lat: 7.797, lng: 123.293, count: 0},
+			'Zamboanga Sibugay':				{lat: 7.402, lng: 122.496, count: 0},
+			'Metro Manila':						{lat: 14.565, lng: 121.024, count: 0},
+			};
+		
+		
+		//get the data stored from the localstorage and parse it
+		
+		var provinces = JSON.parse(localStorage.getItem('Province_Array'));
+		//loop the parse JSON and add count for each same province
+		
+		//add the count value of voters vin
+		for (i=0;i<provinces.length;i++){
+			if (coord[provinces[i]].count > -1){
+				(coord[provinces[i]].count += 1);
+			}	
+		}
+		
+		//pangseperate array vin, store muna dito para di reduntant (*fuck*)
+		var tempLocation = [];
+		for (largo = 0;largo<provinces.length;largo++){
+			if (!(tempLocation.indexOf(provinces[largo]) > -1)){
+				tempLocation[tempLocation.length] = provinces[largo];
+			}
+		}
+		
+		//declare temporary storage of heatmap points
+		var dataHolder = [];
+		for (deleon=0;deleon<tempLocation.length;deleon++){
+			if (coord[tempLocation[deleon]].count > 0 ){
+				dataHolder[dataHolder.length] = coord[tempLocation[deleon]];
+			}			
+		}
+	
+		
+		// map center
+        var myLatlng = new google.maps.LatLng(14.838, 122.000);
+
+        // map options,
+        var myOptions = {
+          zoom: 6,
+          center: myLatlng
+        };
+		
+        // standard map
+        var map = new google.maps.Map(document.getElementById("map-canvas"), myOptions);
+
+		
+        // heatmap layer
+        heatmap = new HeatmapOverlay(map, 
+          {
+            // radius should be small ONLY if scaleRadius is true (or small radius is intended)
+            "radius": 0.13,
+            "maxOpacity": 1, 
+            // scales the radius based on map zoom
+            "scaleRadius": true, 
+            // if set to false the heatmap uses the global maximum for colorization
+            // if activated: uses the data maximum within the current map boundaries 
+            //   (there will always be a red spot with useLocalExtremas true)
+            "useLocalExtrema": true,
+            // which field name in your data represents the latitude - default "lat"
+            latField: 'lat',
+            // which field name in your data represents the longitude - default "lng"
+            lngField: 'lng',
+            // which field name in your data represents the data value - default "value"
+            valueField: 'count'
+			
+          }
+        );
+		
+		//for loop for appending 		
+        var testData = {
+          max: 8,
+          data: [
+
+		  ]
+        };
+		
+		//this is it! :D 
+		for(eliza = 0;eliza<dataHolder.length;eliza++){
+			testData.data[testData.data.length] = dataHolder[eliza];
+		}
+
+
+        heatmap.setData(testData);
+
+</script>
+	<div id="heatmapHolder"></div>
+
+  </body>
+</html>

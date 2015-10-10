@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html>
+   <head>
+      <title>Home</title>
+      <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no" >
+      <meta charset="utf-8">
+       <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,800,700,400italic,600italic,700italic,800italic,300italic" rel="stylesheet" type="text/css">
+      <link rel="stylesheet" href="css/bootstrap.min.css" media="screen">
+	  <link rel="stylesheet" href="css/font-awesome.min.css">
+	  <link rel="stylesheet" href="css/animate.min.css">
+       <link rel="stylesheet" href="css/rvin.css">
+      <style>
+		body
+		{
+		background: #f5f5f5;
+		padding-top:55px;
+		}
+		 .navbar-fixed-top .row
+		 {
+		 margin:0;
+		 padding:0;
+		 }
+		 .menu-top
+		 {
+		 padding:0;
+		 padding-top:10px;
+		 background:#222e86;
+		 }
+
+		 .menu-top .col-xs-3
+		 {
+		 padding:0;
+		 padding-bottom:5px;
+		 color:#efefef;
+		 text-decoration: none;
+		 text-align: center;
+		 font-size: 0.9em;
+		 }
+		 .menu-top .active
+		 {
+		 border-bottom: 5px solid #ff3f3f;
+		 color: #efefef;
+		 }
+		 .animated
+		 {
+		 -webkit-animation-duration: 0.55s;
+		 animation-duration: 0.55s;
+		 }
+		 .list-group-notifications .list-group-item
+		 {
+        font-family: 'Open Sans', sans-serif;
+        font-weight: 600;
+		 border-left: 0;
+		 border-right: 0;
+		 border-radius:0;
+		 }
+          .radio .inline
+          {
+              font-family: 'Open Sans', sans-serif;
+              font-weight: 800;
+          }
+      </style>
+ 
+   </head>
+   <body>
+<!--START NAVBAR-->
+			<div class="container-fluid navbar-fixed-top menu-top">
+				<div class="row">
+          <a href="home.html" class="col-xs-3  tab-btn">
+          <i class="fa fa-comments-o fa-2x fa-fw"></i>
+          </a>
+          <a href="candidates.html" class="col-xs-3 tab-btn">
+          <i class="fa fa-users fa-2x fa-fw"></i>
+          </a>
+          <a href="results.html" class="col-xs-3 active tab-btn">
+          <i class="fa fa-pie-chart fa-2x fa-fw"></i>
+          </a>
+          <a href="map.html" class="col-xs-3 tab-btn">
+          <i class="fa fa-map-marker fa-2x fa-fw"></i>
+          </a>
+				</div>
+			</div>
+<!--END NAVBAR-->
+<!--START CONTENTS-->
+
+		<div class="center-block">
+
+<!--CONTENT-->
+<div id="chartContainer" style="height:50%; width: 100%;"></div>
+
+
+    <div id="chartjs-tooltip"></div>
+    <br>
+
+
+
+
+<!--CONTENT END-->
+
+            </div>
+
+<!--END CONTENTS-->
+<!--POST MODAL-->
+  <div class="modal fade" id="post-modal" tabindex="-1" role="dialog" aria-labelledby="post-modal-label" aria-hidden="true">
+    <div class="vertical-alignment-helper">
+        <div class="modal-dialog vertical-align-center">
+            <div class="modal-content">
+                <div class="modal-header">
+<!--
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+
+                    </button>
+-->
+                     <h4 class="modal-title" id="myModalLabel">Vote Wisely <span id="nameholder"></span>!</h4>
+
+                </div>
+                <div class="modal-body">
+<!--CONTENT MODAL-->
+                    <form id="voteform">
+                            <div class="form-group">
+                            <div class="input-group" id="username" style="margin-bottom:5px;">
+                        <span class="input-group-addon"><i class="fa fa-user fa-lg fa-fw"></i></span>
+                            <input type="text" name="voter_name" id="voter_name" class="form-control" required>
+                        </div>
+                        <br>
+                            <div class="input-group" id="city_choose" style="margin-bottom:5 px;">
+                            <span class="input-group-addon"><i class="fa fa-map-marker fa-lg fa-fw" style="margin-bottom:2px;"></i></span>
+                            <select class="form-control" id="choose_city" name ="choose_city" required>
+                              
+                                                                  <option></option>
+      <option value="Abra">Abra</option>
+      <option value="Agusan del Norte">Agusan del Norte</option>
+      <option value="Agusan del Sur">Agusan del Sur</option>
+      <option value="Aklan">Aklan</option>
+      <option value="Albay">Albay</option>
+      <option value="Antique">Antique</option>
+      <option value="Apayao">Apayao</option>
+      <option value="Aurora">Aurora</option>
+      <option value="Basilan">Basilan</option>
+      <option value="Bataan">Bataan</option>
+      <option value="Batanes">Batanes</option>
+      <option value="Batangas">Batangas</option>
+      <option value="Benguet">Benguet</option>
+      <option value="Biliran">Biliran</option>
+      <option value="Bohol">Bohol</option>
+      <option value="Bukidnon">Bukidnon</option>
+      <option value="Bulacan">Bulacan</option>
+      <option value="Cagayan">Cagayan</option>
+      <option value="Camarines Norte">Camarines Norte</option>
+      <option value="Camarines Sur">Camarines Sur</option>
+      <option value="Camiguin">Camiguin</option>
+      <option value="Capiz">Capiz</option>
+      <option value="Catanduanes">Catanduanes</option>
+      <option value="Cavite">Cavite</option>
+      <option value="Cebu">Cebu</option>
+      <option value="Compostela Valley">Compostela Valley</option>
+      <option value="Cotabato">Cotabato</option>
+      <option value="Davao del Norte">Davao del Norte</option>
+      <option value="Davao del Sur">Davao del Sur</option>
+      <option value="Davao Occidental">Davao Occidental</option>
+      <option value="Davao Oriental">Davao Oriental</option>
+      <option value="Dinagat Islands">Dinagat Islands</option>
+      <option value="Eastern Samar">Eastern Samar</option>
+      <option value="Guimaras">Guimaras</option>
+      <option value="Ifugao">Ifugao</option>
+      <option value="Ilocos Norte">Ilocos Norte</option>
+      <option value="Ilocos Sur">Ilocos Sur</option>
+      <option value="Iloilo">Iloilo</option>
+      <option value="Isabela">Isabela</option>
+      <option value="Kalinga">Kalinga</option>
+      <option value="La Union">La Union</option>
+      <option value="Laguna">Laguna</option>
+      <option value="Lanao del Norte">Lanao del Norte</option>
+      <option value="Lanao del Sur">Lanao del Sur</option>
+      <option value="Leyte">Leyte</option>
+      <option value="Maguindanao">Maguindanao</option>
+      <option value="Marinduque">Marinduque</option>
+      <option value="Masbate">Masbate</option>
+      <option value="Metro Manila">Metro Manila</option>
+      <option value="Misamis Occidental">Misamis Occidental</option>
+      <option value="Misamis Oriental">Misamis Oriental</option>
+      <option value="Mountain Province">Mountain Province</option>
+      <option value="Negros Occidental">Negros Occidental</option>
+      <option value="Negros Oriental">Negros Oriental</option>
+      <option value="Northern Samar">Northern Samar</option>
+      <option value="Nueva Ecija">Nueva Ecija</option>
+      <option value="Nueva Vizcaya">Nueva Vizcaya</option>
+      <option value="Occidental Mindoro">Occidental Mindoro</option>
+      <option value="Oriental Mindoro ">Oriental Mindoro  </option>
+      <option value="Palawan">Palawan</option>
+      <option value="Pampanga">Pampanga</option>
+      <option value="Pangasinan">Pangasinan</option>
+      <option value="Quezon">Quezon</option>
+      <option value="Quirino">Quirino</option>
+      <option value="Rizal">Rizal</option>
+      <option value="Romblon">Romblon</option>
+      <option value="Samar">Samar</option>
+      <option value="Sarangani">Sarangani</option>
+      <option value="Siquijor">Siquijor</option>
+      <option value="Sorsogon">Sorsogon</option>
+      <option value="South Cotabato">South Cotabato</option>
+      <option value="Southern Leyte">Southern Leyte</option>
+      <option value="Sultan Kudarat">Sultan Kudarat</option>
+      <option value="Sulu">Sulu</option>
+      <option value="Surigao del Norte">Surigao del Norte</option>
+      <option value="Surigao del Sur">Surigao del Sur</option>
+      <option value="Tarlac">Tarlac</option>
+      <option value="Tawi-Tawi">Tawi-Tawi</option>
+      <option value="Zambales">Zambales</option>
+      <option value="Zamboanga del Norte">Zamboanga del Norte</option>
+      <option value="Zamboanga del Sur">Zamboanga del Sur</option>
+      <option value="Zamboanga Sibugay">Zamboanga Sibugay</option>
+
+
+                            </select>
+                        </div> 
+                        <br>
+                            <div class="input-group" id="president_choose" style="margin-bottom:5 px;">
+                            <span class="input-group-addon"><i class="fa fa-users fa-lg fa-fw" style="margin-bottom:2px;"></i></span>
+                            <select class="form-control" id="choose_president" name ="choose_president" required>
+                              <option>Choose President</option>
+                              <option>Jejomar Binay</option>
+                              <option>Rodrigo Duterte</option>
+                              <option>Grace Poe</option>
+                              <option>Mar Roxas</option>
+                              <option>Alan Peter Cayetano</option>
+                              <option>Bongbong Marcos</option>
+                              <option>Francis "Chiz" Escudero</option>
+                              <option>Gilbert Teodoro</option>
+                              <option>Panfilo Lacson</option>
+                              <option>Miriam Defensor Santiago</option>
+                              <option>Bong Revilla</option>
+                              <option>Antonio Trillanes</option>
+                            </select>
+                                 </div>
+
+
+                        <br> 
+
+    </div> 
+                            </div>
+
+                <br>
+                     
+            </form>
+            <button id="btn-post-update" class="btn btn-custom btn-block btn-lg">Vote!</button>
+                                     <button id="btn-cancel" class="btn btn-custom btn-block btn-lg" data-dismiss="modal"  role="button" >Cancel</button>
+                                     <br>
+
+            </div>
+            </div>
+                </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>     
+
+          
+<!--END MODAL-->
+<!--START FOOTER-->
+    <div class="btn-context">
+    <a href="#" class="fa-stack fa-2x img-circle btn-up"style="background:#222e86;" data-toggle="modal" data-target="#post-modal">
+      <i class="fa fa-stack-2x img-circle"></i>
+      <i class="fa fa-file-o fa-stack-1x fa-inverse"></i>
+    </a>
+    </div>
+    
+    <div class="btn-context" id="vote_anon" style="visibility:hidden;">
+    <a href="" class="fa-stack fa-2x img-circle btn-up"style="background:#FF0000;">
+      <i class="fa fa-stack-2x img-circle"></i>
+      <i class="fa fa-file-o fa-stack-1x fa-inverse"></i>
+    </a>
+    </div>
+
+<!--END FOOTER--> 
+    <script src="js/jquery-1.11.2.min.js"></script>
+      <script src="js/bootstrap.min.js"></script>
+    <script src="js/fastclick.min.js"></script>
+<!--     // <script src="js/countries.js"></script> -->
+    <script src="js/canvasjs.min.js"></script>
+       <script>
+       window.onload = function () {
+  var pres_votes = JSON.parse(localStorage.getItem('Chart_Data'));
+  var chart = new CanvasJS.Chart("chartContainer",
+  {
+    title:{
+      text: "Presidential Election Results"
+    },     
+                animationEnabled: true,     
+    data: [
+    {        
+      type: "doughnut",
+      startAngle: 60,                          
+      dataPoints: [
+        {y: pres_votes[0], indexLabel: "Grace Poe #percent%"},
+        {y: pres_votes[1], indexLabel: "Jejomar Binay #percent%"},
+        {y: pres_votes[2],  indexLabel: "Mar Roxas #percent%"},
+        {y: pres_votes[3],  indexLabel: "Rodrigo Duterte #percent%"},
+        {y: pres_votes[4],  indexLabel: "Alen Peter Cayetano #percent%"},
+        {y: pres_votes[5],  indexLabel: "Bongbong Marcos #percent%"},
+        {y: pres_votes[6],  indexLabel: "Francis Escudero #percent%"},
+        {y: pres_votes[7],  indexLabel: "Gilbert Teodoro #percent%"},
+        {y: pres_votes[8],  indexLabel: "Panfilo Lacson #percent%"},
+        {y: pres_votes[9],  indexLabel: "Miriam Defensor Santiago #percent%"},
+        {y: pres_votes[10],  indexLabel: "Bong Revilla #percent%"},
+        {y: pres_votes[11],  indexLabel: "Antonio Trillanes #percent%"}
+      ]
+    }
+    ]
+  });
+  chart.render();
+  }
+       $(document).ready(function(){
+
+
+      var anon = localStorage.getItem('anon');
+      if(anon=='true')
+      {
+        $('#vote_login').css("visibility", "hidden");
+        $('#vote_anon').css("visibility", "visible")
+      }
+      else
+      {
+        $('#vote_anon').css("visibility", "hidden");
+      }
+
+
+
+    $('#vote_anon').click(function(){
+            var r = confirm("Please Login to Vote!");
+if (r == true) {
+    location.href="login.html";
+} else {
+    return;
+}
+    });
+
+// print_state('choose_city',181);
+         $('#username').hide();     
+        $('#nameholder').html(localStorage.getItem('Current_user'));
+        $('#voter_name').val(localStorage.getItem('Current_user')); 
+
+          $('#btn-post-update').click(function(){
+            if(localStorage.getItem('voted') == 'true')
+            {
+              alert('You voted already!');
+            }
+            else
+            {
+
+        $.ajax({
+          type:'GET',
+          url:'http://gcccs.org/ecabri/checkvoters.php',
+                    data:{},
+          datatype:'',
+          success:function(data){
+            if(data){
+              $('#holder').html(data);
+            }
+          }
+        });
+            var votersArray = JSON.parse(localStorage.getItem('Voters'));         
+            var voterName =localStorage.getItem('Current_user');
+            if (votersArray.indexOf(voterName) > -1 ){
+              alert('You voted already!');
+            }
+            else{
+
+
+
+           $.ajax({
+
+            type:'POST',
+            url:'http://gcccs.org/ecabri/vote.php',
+            data:$('#voteform').serialize(),
+            success:function(data){
+              if(data=='yes')
+              {
+
+                location.href="success.html";
+              }
+              else
+              {
+                alert('SOMETHING WENT WRONG!');
+              }
+            }
+          });
+            }
+}
+        });
+
+
+
+    $.ajax({
+      type : 'GET',
+      url : 'http://gcccs.org/ecabri/chart.php',
+      data : {},
+      dataType : 'html',
+      success : function (chart){
+        if (chart){
+          $("#holder").html(chart);
+          var chartData = [poevote,binvote,roxasvote,dutertevote,alenvote,bongbongvote,chizvote,gibovote,pingvote,mdsvote,sbrvote,trillanesvote];
+          localStorage.setItem('Chart_Data',JSON.stringify(chartData));
+        }
+      } 
+    });
+  });
+       </script>
+
+        <div id="holder"></div>
+   </body>
+</html>
